@@ -2,7 +2,7 @@ from fredapi import Fred
 import yfinance as yf
 import pandas as pd
 
-# Substitua 'YOUR_API_KEY' pela sua chave de API do FRED
+# Substitua 'YOUR_API_KEY' pela sua chave de API do FRED; FEDERAL RESERVE ECONOMIC DATA 
 fred = Fred(api_key='fc8bc2a9022dd09e0ce8ec07341f8364')
 
 # Definir os códigos das séries para os indicadores desejados no FRED
@@ -46,10 +46,10 @@ dados_yahoo_concatenados = pd.concat(dados_commodities.values(), axis=1)
 # Criar um objeto ExcelWriter para salvar os dados em um único arquivo com duas abas
 with pd.ExcelWriter('dados_combinados.xlsx') as writer:
     # Salvar dados do FRED na primeira aba
-    dados_fred_concatenados.to_excel(writer, sheet_name='FRED')
+    dados_fred_concatenados.to_excel(writer, sheet_name='Variáveis')
     
     # Salvar dados do Yahoo Finance na segunda aba
-    dados_yahoo_concatenados.to_excel(writer, sheet_name='Yahoo Finance')
+    dados_yahoo_concatenados.to_excel(writer, sheet_name='Trigo, Milho, Soja e Café')
 
 # Verificar a exportação
-print("Dados exportados para 'dados_combinados.xlsx' com abas 'FRED' e 'Yahoo Finance'")
+print("Dados exportados para 'dados_combinados.xlsx' com abas 'Variáveis' e 'Trigo, Milho, Soja e Café'")
