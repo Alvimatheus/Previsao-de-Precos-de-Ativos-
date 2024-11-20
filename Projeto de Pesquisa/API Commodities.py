@@ -44,7 +44,7 @@ for ticker, data in dados_commodities.items():
 dados_yahoo_concatenados = pd.concat(dados_commodities.values(), axis=1)
 
 # Criar um objeto ExcelWriter para salvar os dados em um único arquivo com duas abas
-with pd.ExcelWriter('dados_combinados.xlsx') as writer:
+with pd.ExcelWriter('commodities_variaveis.xlsx') as writer:
     # Salvar dados do FRED na primeira aba
     dados_fred_concatenados.to_excel(writer, sheet_name='Variáveis')
     
@@ -52,4 +52,4 @@ with pd.ExcelWriter('dados_combinados.xlsx') as writer:
     dados_yahoo_concatenados.to_excel(writer, sheet_name='Trigo, Milho, Soja e Café')
 
 # Verificar a exportação
-print("Dados exportados para 'dados_combinados.xlsx' com abas 'Variáveis' e 'Trigo, Milho, Soja e Café'")
+print("Dados exportados para 'commodities_variaveis.xlsx' com abas 'Variáveis' e 'Trigo, Milho, Soja e Café'")
