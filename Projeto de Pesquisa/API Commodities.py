@@ -18,9 +18,6 @@ from matplotlib import pyplot
 
 
 
-
-
-
 # Substitua 'YOUR_API_KEY' pela sua chave de API do FRED
 fred = Fred(api_key='fc8bc2a9022dd09e0ce8ec07341f8364')
 
@@ -70,9 +67,6 @@ with pd.ExcelWriter('commodities_variaveis.xlsx') as writer:
 
 # Verificar a exportação
 print("Dados exportados para 'commodities_variaveis.xlsx' com abas 'Variáveis' e 'Trigo, Milho, Soja e Café'")
-
-
-
 
 
 
@@ -212,7 +206,7 @@ plt.show()
 
 # Selecionar colunas específicas para o modelo ARIMA
 # Substitua ['col1', 'col2', 'col3'] pelas colunas que você deseja usar
-cols_arima = ['col1','col2', 'col3', 'col4']  # Adicione os nomes corretos das colunas
+cols_arima = ['col1', 'col2', 'col3', 'col4']  # Adicione os nomes corretos das colunas
 X_train_ARIMA = X_train[cols_arima]
 X_test_ARIMA = X_test[cols_arima]
 
