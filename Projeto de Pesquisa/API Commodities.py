@@ -47,7 +47,7 @@ tickers = ['ZW=F', 'ZC=F', 'ZS=F', 'KC=F']  # Trigo, Milho, Soja, Café
 # Baixar dados históricos para cada ticker do Yahoo Finance e armazenar em um dicionário
 dados_commodities = {}
 for ticker in tickers:
-    dados_commodities[ticker] = yf.download(ticker, period='max')
+    dados_commodities[ticker] = yf.download(ticker, period='20y')
 
 # Renomear as colunas e remover fuso horário dos índices de data dos dados do Yahoo Finance
 for ticker, data in dados_commodities.items():
@@ -261,6 +261,27 @@ best_order = evaluate_arima_model(p_values, d_values, q_values)
 # Verificar tamanhos após a seleção
 print(f"Tamanho de X_train_ARIMA: {X_train_ARIMA.shape}")
 print(f"Tamanho de X_test_ARIMA: {X_test_ARIMA.shape}")
+
+
+# Tratamento de erros no download dos tickers
+for ticker in tickers:
+    try:
+        dados_commodities[ticker] = yf.download(ticker, period='10y')
+        dados_commodities[ticker].index = dados_commodities[ticker].index.tz_localize(None)
+        dados_commodities[ticker].rename(columns={'Adj Close': ticker}, inplace=True)
+    except Exception as e:
+        print(f"Falha ao baixar dados para {ticker}: {e}")
+
+# Verificar tamanhos entre Y_test e predicted_LSTM
+try:
+    print(f"Tamanho de Y_test: {Y_test.shape[0]}, Tamanho de predicted_LSTM: {predicted_LSTM.shape[0]}")
+    Y_test_cleaned = Y_test[:predicted_LSTM.shape[0]]  # Alinhar tamanhos
+    error_Test_LSTM = mean_squared_error(Y_test_cleaned, predicted_LSTM)
+    print(f"Erro de Teste LSTM: {error_Test_LSTM}")
+except ValueError as ve:
+    print(f"Erro ao calcular o MSE: {ve}")
+
+
 
 # Modelo ARIMA ajustado
 print("Treinando modelo ARIMA ajustado...")
